@@ -21,6 +21,11 @@ public class CottonModInstance<M> : CottonMod where M : CottonMod
     public CottonModInstance() => Instance = this;
 } 
 
+/// <summary>
+/// <see cref="CottonMod"/> is an extended version of <see cref="MelonMod"/>, with some SR2 specific fields and constants
+/// It also includes some Virtual Methods to write SR2 Mods
+/// </summary>
+
 public abstract class CottonMod : MelonMod
 {
     public Semver.SemVersion version
@@ -43,6 +48,9 @@ public abstract class CottonMod : MelonMod
     public virtual void OnSavedGameLoaded() { }
         
     public virtual void PreGameSaving() { }
+    /// <summary>
+    /// Called once CottonLibary is called, usually the main function of mods with one-time tasks.
+    /// </summary>
     public virtual void SaveDirectorLoaded() { }
     
     /// <summary>

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Il2CppMonomiPark.SlimeRancher.Script.Util;
+using MelonLoader;
 using Microsoft.VisualBasic.FileIO;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Tables;
@@ -23,13 +24,15 @@ public static partial class Library
     internal static Dictionary<string, LocalizedString> loadedLocalizedStrings = new Dictionary<string, LocalizedString>();
     internal static Dictionary<string, ModdedLocalizedText> moddedLocalizedStrings = new Dictionary<string, ModdedLocalizedText>();
         
-
+    /// <summary>
+    /// </summary>
+    /// <param name="key">Key of the localization you want to get</param>
+    /// <returns>string containing the value of the current localization.</returns>
     public static string LoadLocalizedText(string key)
     {
         if (String.IsNullOrWhiteSpace(key) || !loadedLanguage.ContainsKey(key)) return key;
         return loadedLanguage[key];
     }
-    
     public static string LoadLocalizedText(string key, params object[] args)
     {
         if (String.IsNullOrWhiteSpace(key) || !loadedLanguage.ContainsKey(key)) return key;
@@ -44,7 +47,11 @@ public static partial class Library
     
         return translatedRaw;
     }
-
+    /// <summary>
+    /// </summary>
+    /// <param name="key">The Key of the localization</param>
+    /// <param name="table">Table of localization (default Actor Table)</param>
+    /// <returns><see cref="LocalizedString"/> with the given key</returns>
     public static LocalizedString CreateLocalizedString(string key, string table = "Actor"){
         return CreateLocalizedString(key, table, new object[0]);
     }
@@ -65,9 +72,9 @@ public static partial class Library
     }
 
     /// <summary>
-    /// Add a localization table.
+    /// Add a localization table, this should be called in <see cref="MelonBase.OnInitializeMelon"/> to prohibit errors.
     /// </summary>
-    /// <param name="csvFile">The <c>.CSV</c> file containing the translations</param>
+    /// <param name="csvFile">The <c>.CSV</c> file containing the translations, without file-extension.</param>
     public static void AddLanguages(string csvFile)
     {
         var newLanguages = new Dictionary<string, Dictionary<string, string>>();
